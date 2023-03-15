@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:netflix_clone/presention/main_page/main_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,22 +16,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  _MyHomePageState(),
+      home:  MainPage(),
     );
   }
 }
 
 
-class _MyHomePageState extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Netflix clone'),
-      ),
-      body: Container(
-        color: Colors.amber,
-      ),
-    );
-  }
-}
+
