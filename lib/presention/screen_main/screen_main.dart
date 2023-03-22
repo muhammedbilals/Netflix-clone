@@ -17,19 +17,22 @@ class ScreenMain extends StatelessWidget {
     NewandHotPage(),
     FastlaughsPage(),
     SearchPage(),
-    DownloadsPage()
+    DownloadsPage(),
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: bgcolor,
-      body: ValueListenableBuilder(
-        valueListenable: indexChangeNotifier,
-        builder: (context, int value, _) {
-          return _pages[value];
-        },
+    return SafeArea(
+      child: Scaffold(
+        
+        backgroundColor: bgcolor,
+        body: ValueListenableBuilder(
+          valueListenable: indexChangeNotifier,
+          builder: (context, int value, _) {
+            return _pages[value];
+          },
+        ),
+        bottomNavigationBar: BottomNavigationBarWidget(),
       ),
-      bottomNavigationBar: BottomNavigationBarWidget(),
     );
   }
 }
