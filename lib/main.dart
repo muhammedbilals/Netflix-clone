@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:netflix_clone/presention/main_page/main_page.dart';
-import 'package:netflix_clone/presention/screen_main/screen_main.dart';
+import 'package:netflix_clone/presention/home_page/Screen_home.dart';
+import 'package:netflix_clone/presention/main_pages/ScreenHome.dart';
 
 void main() {
   runApp(const MyApp());
