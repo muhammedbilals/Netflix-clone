@@ -1,6 +1,15 @@
 part of 'downloads_bloc.dart';
 
-@immutable
-abstract class DownloadsState {}
+@freezed
+class DownloadsState with _$DownloadsState {
+  const factory DownloadsState({
+    required bool isLoading,
+    List<Downloads>? downloads,
+  }) = _DownloadsState;
 
-class DownloadsInitial extends DownloadsState {}
+  factory DownloadsState.inital() {
+    return const DownloadsState(
+      isLoading: false,
+    );
+  }
+}
