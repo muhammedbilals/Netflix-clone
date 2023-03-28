@@ -51,6 +51,7 @@ dev_dependencies:
   get_it: ^7.2.0
   injectable: ^1.5.3
   injectable_generator: ^1.5.3
+  intl: ^0.18.0
   json_annotation: ^4.4.0
   json_serializable: ^6.6.1
   share_plus: ^6.3.1
