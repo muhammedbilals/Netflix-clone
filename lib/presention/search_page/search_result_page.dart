@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:netflix_clone/application/search/search_bloc.dart';
 import 'package:netflix_clone/core/constants.dart';
 import 'package:netflix_clone/presention/search_page/title.dart';
 
@@ -15,18 +18,23 @@ class SearchResultWidget extends StatelessWidget {
         SearchTextTitle(title: 'Movies & TV'),
         sboxH,
         Expanded(
-          child: GridView.count(
-            crossAxisCount: 3,
-            shrinkWrap: true,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 8,
-            childAspectRatio: 1 / 1.5,
-            children: List.generate(
-              20,
-              (index) {
-                return MainCard();
-              },
-            ),
+          child: BlocBuilder<SearchBloc, SearchState>(
+            builder: (context, state) {
+              return GridView.count(
+                crossAxisCount: 3,
+                shrinkWrap: true,
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+                childAspectRatio: 1 / 1.5,
+                children: List.generate(
+                  20,
+                  (index) {
+                    final movie = state.searchResultList[index];
+                    return MainCard(imageUrl: movie.posterImageUrl,);
+                  },
+                ),
+              );
+            },
           ),
         ),
       ],
@@ -35,21 +43,18 @@ class SearchResultWidget extends StatelessWidget {
 }
 
 class MainCard extends StatelessWidget {
-  const MainCard({super.key});
+  final String imageUrl;
+  const MainCard({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
-    final imageurl = [
-      'https://www.flickeringmyth.com/wp-content/uploads/2021/12/Wolf-of-Wall-Street-4k-600x771-1.jpg'
-    ];
-
     final Size size = MediaQuery.of(context).size;
     return Container(
       // width: size.width * 0.35,
       // height: 70,
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: NetworkImage(imageurl[0]), fit: BoxFit.cover)),
+              image: NetworkImage(imageUrl), fit: BoxFit.cover)),
     );
   }
 }

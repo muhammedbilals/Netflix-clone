@@ -7,7 +7,7 @@ import 'package:netflix_clone/presention/fast_laughs_page/fast_laughs_page.dart'
 import 'package:netflix_clone/presention/main_pages/bottom_navigation.dart';
 import 'package:netflix_clone/presention/home_page/Screen_home.dart';
 import 'package:netflix_clone/presention/new_and_hot_page/new_and_hot_page.dart';
-import 'package:netflix_clone/presention/search_page/search_page.dart';
+import 'package:netflix_clone/presention/search_page/screen_search.dart';
 
 class ScreenMain extends StatelessWidget {
   ScreenMain({super.key});
@@ -16,7 +16,7 @@ class ScreenMain extends StatelessWidget {
     HomeScreen(),
     NewandHotPage(),
     FastlaughsPage(),
-    SearchPage(),
+    ScreenSearch(),
     DownloadsPage(),
   ];
   @override

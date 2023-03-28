@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:netflix_clone/application/search/search_bloc.dart';
 import 'package:netflix_clone/core/colors/colors.dart';
 import 'package:netflix_clone/core/constants.dart';
 import 'package:netflix_clone/presention/search_page/title.dart';
@@ -16,11 +18,29 @@ class SearchIdle extends StatelessWidget {
         SearchTextTitle(title: "Top Searches"),
         sboxH,
         Expanded(
-          child: ListView.separated(
-            shrinkWrap: true,
-            itemBuilder: (context, index) => TopSearchItemTile(),
-            separatorBuilder: (context, index) => sboxH,
-            itemCount: 10,
+          child: BlocBuilder<SearchBloc, SearchState>(
+            builder: (context, state) {
+              if (state.isLoading) {
+                return Center(
+                  child: const CircularProgressIndicator(),
+                );
+              } else if (state.isError) {
+                return Center(child: const Text('Error Occured'));
+              } else if (state.idleList.isEmpty) {
+                return Center(child: const Text('List is Empty'));
+              }
+              return ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  final movie = state.idleList[index];
+                  return TopSearchItemTile(
+                      imageUrl: '$imageAppendUrl${movie.posterPath}' ,
+                      title: movie.title ?? 'Movie Title');
+                },
+                separatorBuilder: (context, index) => sboxH,
+                itemCount: state.idleList.length,
+              );
+            },
           ),
         )
       ],
@@ -29,10 +49,9 @@ class SearchIdle extends StatelessWidget {
 }
 
 class TopSearchItemTile extends StatelessWidget {
-  TopSearchItemTile({super.key});
-  final imageurl = [
-    'https://www.flickeringmyth.com/wp-content/uploads/2021/12/Wolf-of-Wall-Street-4k-600x771-1.jpg'
-  ];
+  final String title;
+  final String imageUrl;
+  TopSearchItemTile({super.key, required this.imageUrl, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +63,13 @@ class TopSearchItemTile extends StatelessWidget {
           height: 70,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: NetworkImage(imageurl[0]), fit: BoxFit.cover)),
+                  image: NetworkImage(imageUrl), fit: BoxFit.cover)),
         ),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Movie Name',
+              title,
               style: TextStyle(
                   color: bgwhite, fontWeight: FontWeight.bold, fontSize: 16),
             ),
