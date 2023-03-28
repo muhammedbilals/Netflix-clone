@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:netflix_clone/application/home_page/home_page_bloc.dart';
 import 'package:netflix_clone/core/colors/colors.dart';
 import 'package:netflix_clone/core/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:netflix_clone/presention/home_page/number_card.dart';
 import 'package:netflix_clone/presention/main_pages/bottom_navigation.dart';
 import 'package:netflix_clone/widgets/main_title.dart';
@@ -12,6 +15,9 @@ class HomeScreen extends StatelessWidget {
       'https://3.bp.blogspot.com/-b75pK55L104/VvU4LBTCC5I/AAAAAAAAG60/9__nl7WbMqUNwUYEqhC8d6-yToy-g_vKw/s1600/BvS%2BPoster.jpg';
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<HomePageBloc>(context).add(const GetHomeScreenData());
+    });
     return Scaffold(
       backgroundColor: bgcolor,
       body: SingleChildScrollView(
@@ -134,52 +140,118 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: MainTitle(title: 'Released in the past year'),
-            ),
-            Container(
-              height: 200,
-              width: double.infinity,
-              child: ListView(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  children: List.generate(10, (index) => MainCardHome())),
-            ),
-            sboxH,
-            MainTitle(title: 'Trending Now'),
-            sboxH,
-            Container(
-              height: 200,
-              width: double.infinity,
-              child: ListView(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  children: List.generate(10, (index) => MainCardHome())),
-            ),
-            MainTitle(title: 'Top 10 TV shows in india Today'),
-            sboxH,
-            Container(
-              height: 200,
-              width: double.infinity,
-              child: ListView(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  children: List.generate(
-                      10,
-                      (index) => NumberCard(
-                            index: index,
-                          ))),
-            ),
-            MainTitle(title: 'Only on Netflix'),
-            sboxH,
-            Container(
-              height: 200,
-              width: double.infinity,
-              child: ListView(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  children: List.generate(10, (index) => MainCardHome())),
+            BlocBuilder<HomePageBloc, HomePageState>(
+              builder: (context, state) {
+                if (state.isLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                    ),
+                  );
+                } else if (state.hasError) {
+                  return const Center(
+                    child: Text(
+                      "Error while getting data",
+                      style: TextStyle(color: bgwhite),
+                    ),
+                  );
+                }
+
+                final releasedPastYear = state.pastYearMovieList.map(
+                  (m) {
+                    return '$imageAppendUrl${m.posterPath}';
+                  },
+                ).toList();
+                releasedPastYear.shuffle();
+                //trending--------
+
+                final trending = state.trendingMovieList.map(
+                  (m) {
+                    return '$imageAppendUrl${m.posterPath}';
+                  },
+                ).toList();
+                print(trending);
+                trending.shuffle();
+                //tense drama---------
+                final tenseDrama = state.tenseMovieList.map(
+                  (m) {
+                    return '$imageAppendUrl${m.posterPath}';
+                  },
+                ).toList();
+                //south indian Cinemas---------
+
+                final southIndianCinemas = state.southIndianMovieList.map(
+                  (m) {
+                    return '$imageAppendUrl${m.posterPath}';
+                  },
+                ).toList();
+                southIndianCinemas.shuffle();
+
+                // top 10 tv show--------
+
+                final top10TvShow = state.trendingTvList.map(
+                  (m) {
+                    return '$imageAppendUrl${m.posterPath}';
+                  },
+                ).toList();
+                top10TvShow.shuffle();
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: MainTitle(title: 'Released in the past year'),
+                    ),
+                    Container(
+                      height: 200,
+                      width: double.infinity,
+                      child: ListView(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          children:
+                              List.generate(releasedPastYear.length, (index) => MainCardHome(posterPath: releasedPastYear[index],))),
+                    ),
+                    sboxH,
+                    MainTitle(title: 'Trending Now'),
+                    sboxH,
+                    Container(
+                      height: 200,
+                      width: double.infinity,
+                      child: ListView(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          children:
+                              List.generate(trending.length, (index) => MainCardHome(posterPath: trending[index]))),
+                    ),
+                    MainTitle(title: 'Top 10 TV shows in india Today'),
+                    sboxH,
+                    Container(
+                      height: 200,
+                      width: double.infinity,
+                      child: ListView(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          children: List.generate(
+                              releasedPastYear.length,
+                              (index) => NumberCard(
+                                    index: index,
+                                    posterPath: top10TvShow[index],
+                                  ))),
+                    ),
+                    MainTitle(title: 'South Indian Cinemas'),
+                    sboxH,
+                    Container(
+                      height: 200,
+                      width: double.infinity,
+                      child: ListView(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          children:
+                              List.generate(southIndianCinemas.length, (index) => MainCardHome(posterPath: southIndianCinemas[index]))),
+                    ),
+                  ],
+                );
+              },
             ),
           ],
         ),
