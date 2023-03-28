@@ -15,7 +15,7 @@ class ScreenMain extends StatelessWidget {
   List _pages = [
     HomeScreen(),
     NewandHotPage(),
-    FastlaughsPage(),
+    ScreenFastLaugh(),
     ScreenSearch(),
     DownloadsPage(),
   ];

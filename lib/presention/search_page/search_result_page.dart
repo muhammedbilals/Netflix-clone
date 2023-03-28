@@ -26,7 +26,7 @@ class SearchResultWidget extends StatelessWidget {
                 mainAxisSpacing: 8,
                 crossAxisSpacing: 8,
                 childAspectRatio: 1 / 1.5,
-                children: List.generate(
+                children: List.generate( 
                   20,
                   (index) {
                     final movie = state.searchResultList[index];

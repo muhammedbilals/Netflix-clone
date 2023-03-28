@@ -127,9 +127,9 @@ class CmingSoonWidget extends StatelessWidget {
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
                   Spacer(),
-                  VideoActions(icon: Icons.alarm, title: 'Remind Me'),
+                  VideoActionsWidget(icon: Icons.alarm, title: 'Remind Me'),
                   sboxW,
-                  VideoActions(icon: Icons.info, title: 'info'),
+                  VideoActionsWidget(icon: Icons.info, title: 'info'),
                   sboxW
                 ],
               ),
