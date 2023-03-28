@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix_clone/application/downloads/downloads_bloc.dart';
+import 'package:netflix_clone/domain/core/di/injectable.dart';
 import 'package:netflix_clone/presention/home_page/Screen_home.dart';
 import 'package:netflix_clone/presention/main_pages/main_page.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureInjection();
   runApp(const MyApp());
 }
 
@@ -13,18 +18,24 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        textTheme: TextTheme(
-          bodyLarge: GoogleFonts.montserrat(color: Colors.white),
-          bodyMedium: GoogleFonts.montserrat(color: Colors.white),
+    return MultiBlocProvider(
+     providers: [
+        BlocProvider(create: (context) => getIt<DownloadsBloc>()),
+
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Neflix',
+        theme: ThemeData(
+          textTheme: TextTheme(
+            bodyLarge: GoogleFonts.montserrat(color: Colors.white),
+            bodyMedium: GoogleFonts.montserrat(color: Colors.white),
+          ),
+          fontFamily: GoogleFonts.montserrat().fontFamily,
+          primarySwatch: Colors.blue,
         ),
-        fontFamily: GoogleFonts.montserrat().fontFamily,
-        primarySwatch: Colors.blue,
+        home: ScreenMain(),
       ),
-      home: ScreenMain(),
     );
   }
 }

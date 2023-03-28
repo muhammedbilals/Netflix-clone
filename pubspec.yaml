@@ -48,8 +48,8 @@ dev_dependencies:
     sdk: flutter
   freezed: ^2.3.2
   get_it: ^7.2.0
-  injectable: ^2.1.1
-  injectable_generator: ^2.1.5
+  injectable: ^1.5.3
+  injectable_generator: ^1.5.3
   json_annotation: ^4.4.0
   json_serializable: ^6.6.1
   video_player: ^2.6.0

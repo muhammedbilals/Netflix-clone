@@ -1,9 +1,10 @@
 import 'dart:math';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:netflix_clone/application/downloads/downloads_bloc.dart';
 import 'package:netflix_clone/core/colors/colors.dart';
 import 'package:netflix_clone/core/constants.dart';
 import 'package:netflix_clone/widgets/appbarwidget.dart';
@@ -59,16 +60,22 @@ class Section1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      BlocProvider.of<DownloadsBloc>(context)
+        .add(const DownloadsEvent.getDownloadsImage());
+    // });
     final Size size = MediaQuery.of(context).size;
+    
     List imglist = [
       "https://www.joblo.com/wp-content/uploads/2010/05/inception-poster-7-1.jpg",
-      "https://www.themoviedb.org/t/p/original/aKuFiU82s5ISJpGZp7YkIr3kCUd.jpg",
+      "https://cdn.domestika.org/c_fit,dpr_1.0,f_auto,t_base_params,w_820/v1588506363/content-items/004/426/631/7ebcf767947303.5b4c5d6482ebf-original.png?1588506363",
       "https://cdn.domestika.org/c_fit,dpr_1.0,f_auto,t_base_params,w_820/v1588506363/content-items/004/426/631/7ebcf767947303.5b4c5d6482ebf-original.png?1588506363"
     ];
     return Column(
       children: [
         const Text(
           'Introducing Downloads for You',
+    
           textAlign: TextAlign.center,
           style: TextStyle(
               color: bgwhite, fontSize: 20, fontWeight: FontWeight.bold),
