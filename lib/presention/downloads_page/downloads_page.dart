@@ -84,39 +84,48 @@ class Section1 extends StatelessWidget {
         ),
         BlocBuilder<DownloadsBloc, DownloadsState>(
           builder: (context, state) {
-           return 
-             SizedBox(
+            if (state.downloads.isEmpty) {
+             return CircularProgressIndicator();
+            } 
+           else{
+             return SizedBox(
               width: size.width,
               height: size.width,
-              child:state.isLoading? Center(child: const CircularProgressIndicator()): Stack(
-                alignment: Alignment.center,
-                children: [
-                  Center(
-                    child: CircleAvatar(
-                      radius: size.width * 0.4,
-                      backgroundColor: Colors.grey.withOpacity(0.5),
+              child: state.isLoading
+                  ? Center(child: const CircularProgressIndicator())
+                  : Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Center(
+                          child: CircleAvatar(
+                            radius: size.width * 0.4,
+                            backgroundColor: Colors.grey.withOpacity(0.5),
+                          ),
+                        ),
+                        DownloadsImageWidget(
+                          imglist:
+                              '$imageAppendUrl${state.downloads[0].posterPath}',
+                          margin: const EdgeInsets.only(left: 130, bottom: 20),
+                          angle: 20,
+                          size: Size(size.width * 0.65, size.width * 0.58),
+                        ), 
+                        DownloadsImageWidget(
+                          imglist:
+                              '$imageAppendUrl${state.downloads[1].posterPath}',
+                          margin: const EdgeInsets.only(right: 130, bottom: 20),
+                          angle: -20,
+                          size: Size(size.width * 0.65, size.width * 0.58),
+                        ),
+                        DownloadsImageWidget(
+                          imglist:
+                              '$imageAppendUrl${state.downloads[2].posterPath}',
+                          margin: const EdgeInsets.only(left: 0, bottom: 0),
+                          size: Size(size.width * 0.7, size.width * 0.58),
+                        ),
+                      ],
                     ),
-                  ),
-                  DownloadsImageWidget(
-                    imglist: '$imageAppendUrl${state.downloads[0].posterPath}',
-                    margin: const EdgeInsets.only(left: 130, bottom: 20),
-                    angle: 20,
-                    size: Size(size.width * 0.65, size.width * 0.58),
-                  ),
-                  DownloadsImageWidget(
-                    imglist: '$imageAppendUrl${state.downloads[1].posterPath}',
-                    margin: const EdgeInsets.only(right: 130, bottom: 20),
-                    angle: -20,
-                    size: Size(size.width * 0.65, size.width * 0.58),
-                  ),
-                  DownloadsImageWidget(
-                    imglist: '$imageAppendUrl${state.downloads[2].posterPath}',
-                    margin: const EdgeInsets.only(left: 0, bottom: 0),
-                    size: Size(size.width * 0.7, size.width * 0.58),
-                  ),
-                ],
-              ),
             );
+           }
           },
         ),
       ],

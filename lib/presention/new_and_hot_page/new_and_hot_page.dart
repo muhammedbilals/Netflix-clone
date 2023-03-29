@@ -108,7 +108,7 @@ class ComingSoonWidget extends StatelessWidget {
                 // print(state.comingSoonList[0].releaseDate);
 
                 final date =
-                    DateTime.parse(state.comingSoonList[index].releaseDate!);
+                    DateTime.parse(state.comingSoonList[index].releaseDate??"2002-05-01");
                 final formatedDate = DateFormat.yMMMMd('en_US').format(date);
                 final month =
                     formatedDate.split(' ').first.substring(0, 3).toUpperCase();
@@ -129,10 +129,11 @@ class ComingSoonWidget extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                state.comingSoonList[index].releaseDate!
-                                    .split('-')[2],
+                                // state.comingSoonList[index].releaseDate!
+                                //     .split('-')[2],
+                                'FEB 11',
                                 style: const TextStyle(
-                                  fontSize: 30,
+                                  fontSize: 25,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -171,10 +172,11 @@ class ComingSoonWidget extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   SizedBox(
-                                    width: 300,
+                                    // width: 300,
                                     child: Text(
                                       state
-                                          .comingSoonList[index].originalTitle!,
+                                          .comingSoonList[index].name!,
+                                      // 'Orginal Title',
                                       style: const TextStyle(
                                         fontSize: 30,
                                         fontWeight: FontWeight.bold,
