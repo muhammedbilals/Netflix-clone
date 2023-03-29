@@ -4,7 +4,6 @@ import 'package:netflix_clone/application/hot_and_new/hot_and_new_bloc.dart';
 import 'package:netflix_clone/core/colors/colors.dart';
 import 'package:intl/intl.dart';
 
-
 import '../../core/constants.dart';
 
 class ScreenNewAndHot extends StatelessWidget {
@@ -107,8 +106,8 @@ class ComingSoonWidget extends StatelessWidget {
               itemBuilder: (BuildContext context, index) {
                 // print(state.comingSoonList[0].releaseDate);
 
-                final date =
-                    DateTime.parse(state.comingSoonList[index].releaseDate??"2002-05-01");
+                final date = DateTime.parse(
+                    state.comingSoonList[index].releaseDate ?? "2002-05-01");
                 final formatedDate = DateFormat.yMMMMd('en_US').format(date);
                 final month =
                     formatedDate.split(' ').first.substring(0, 3).toUpperCase();
@@ -129,9 +128,9 @@ class ComingSoonWidget extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                // state.comingSoonList[index].releaseDate!
-                                //     .split('-')[2],
-                                'FEB 11',
+                                state.comingSoonList[index].releaseDate!
+                                    .split('-')[2],
+                                // 'FEB 11',
                                 style: const TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
@@ -172,10 +171,10 @@ class ComingSoonWidget extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   SizedBox(
-                                    // width: 300,
+                                    width: 250,
                                     child: Text(
                                       state
-                                          .comingSoonList[index].name!,
+                                          .comingSoonList[index].originalTitle!,
                                       // 'Orginal Title',
                                       style: const TextStyle(
                                         fontSize: 30,
